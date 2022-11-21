@@ -1,12 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useEth } from "../../contexts/EthContext";
-import NoticeVotingEnd from "./NoticeVotingEnd";
 import NoticeVotingNotStarted from "./NoticeVotingNotStarted";
 import "./Voting.css";
 
 const Voting = ({ workflowStatus }) => {
-  console.log({ "voting:init:workflowStatus": workflowStatus });
+  // console.log({ "voting:init:workflowStatus": workflowStatus });
   const {
     state: { contract, accounts },
   } = useEth();
@@ -15,7 +14,7 @@ const Voting = ({ workflowStatus }) => {
   const [proposals, setProposals] = useState([]);
   const [oldProposalEvent, setOldProposalEvent] = useState([]);
   const [value, setValue] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [canVote, setCanVote] = useState(true);
 
   const voteProposalHandler = async () => {
     try {
@@ -31,9 +30,32 @@ const Voting = ({ workflowStatus }) => {
     setHasError(false);
     setError("");
     const value = parseInt(e.target.value);
-    // console.log({ "voting:dropdownChange": value });
     setValue(value);
   };
+
+  useEffect(() => {
+    (async function () {
+      if (contract && workflowStatus === 3) {
+        try {
+          const voter = await contract.methods.getVoter(accounts[0]).call({
+            from: accounts[0],
+          });
+          console.log({
+            "Voting:voter": voter,
+            "Voting:voter:hasVoted": voter.hasVoted,
+          });
+          if (voter?.hasVoted) {
+            setCanVote(false);
+            throw "You can't vote twice !";
+          }
+        } catch (e) {
+          console.error(e);
+          setHasError(true);
+          setError(e);
+        }
+      }
+    })();
+  }, [contract, accounts, voteProposalHandler]);
 
   useEffect(() => {
     if (contract) {
@@ -47,7 +69,6 @@ const Voting = ({ workflowStatus }) => {
         );
 
         setOldProposalEvent(oldProposalEvent);
-        // console.log({ "Voting:1:ProposalRegisteredEvent": oldProposalEvent });
       };
       fetchProposalEvents().catch(console.error);
     }
@@ -59,17 +80,12 @@ const Voting = ({ workflowStatus }) => {
         const tmpProposals = await Promise.all(
           oldProposalEvent.map(async (event) => {
             const proposalId = parseInt(event.returnValues.proposalId);
-            // console.log({ "voting:proposalId": proposalId });
             try {
               const tmpProposal = await contract.methods
                 .getOneProposal(proposalId)
                 .call({ from: accounts[0] });
 
-              // console.log({
-              //   "voting:1:description": tmpProposal.description,
-              // });
-
-              return tmpProposal?.description ?? "HODOR";
+              return tmpProposal?.description;
             } catch (e) {
               console.error();
               setHasError(true);
@@ -77,9 +93,7 @@ const Voting = ({ workflowStatus }) => {
             }
           })
         );
-        // console.log({ "voting:2:tmpProposals": tmpProposals });
         setProposals(tmpProposals);
-        setIsLoading(false);
       };
       fetchProposals().catch(console.error);
     }
@@ -88,15 +102,12 @@ const Voting = ({ workflowStatus }) => {
   const voting = (
     <>
       <div id="voting" className="row justify-content-center">
-        <h2 className="title">Voting time</h2>
+        <h1 className="title">Voting time</h1>
         <div className="col-5">
           <form
             className="row justify-content-center g-3 needs-validation"
             noValidate
           >
-            <pre style={{ color: "black" }}>
-              {/* DUMP : {JSON.stringify(proposals, oldProposalEvent)} */}
-            </pre>
             <select
               className={`form-select ${hasError ? "error" : ""}`}
               aria-label="Default select example"
@@ -111,13 +122,13 @@ const Voting = ({ workflowStatus }) => {
                       {item}
                     </option>
                   ))
-                : null}
+                : ""}
             </select>
             <div className="error">{error}</div>
             <button
               onClick={voteProposalHandler}
               type="button"
-              className="btn btn-primary btn-lg"
+              className={`btn btn-primary btn-lg ${!canVote ? "disabled" : ""}`}
             >
               Vote
             </button>
