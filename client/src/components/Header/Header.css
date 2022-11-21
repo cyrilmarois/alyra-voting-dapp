@@ -1,0 +1,44 @@
+#monkey-network {
+  font-size: 30px;
+}
+
+#Header {
+  height: 60px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.block {
+  display: inline-block;
+  font-family: sans-serif;
+  font-weight: bold;
+  min-width: 110px;
+  max-width: 110px;
+  background-color: #20daa0;
+  margin: auto;
+  color: #fff;
+  font-size: 16px;
+  height: 2.5em;
+  border-radius: 0.5em;
+  text-align: center;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.button {
+  display: block;
+  margin: auto;
+  background-color: #fff;
+  color: #000;
+  border-radius: 10em;
+  font-size: 0.5em;
+  width: 10em;
+  margin-top: 0.6em;
+}
+
+@media only screen and (max-width: 300px) {
+  .button {
+  }
+  .block {
+  }
+}

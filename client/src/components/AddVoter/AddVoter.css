@@ -1,0 +1,17 @@
+#voter {
+  height: 300px;
+  background-color: white;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+.title {
+  color: #56131c;
+}
+.error {
+  color: red;
+  font-size: 12px;
+}
+input.error {
+  border: 1px solid red;
+}
