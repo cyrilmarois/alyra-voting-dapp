@@ -1,0 +1,12 @@
+#Result {
+  height: 300px;
+  /* background-color: #20daa0; */
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: black;
+  text-transform: uppercase;
+}
+.winning {
+  font-size: 24px;
+}
