@@ -10,3 +10,20 @@
 .winning {
   font-size: 24px;
 }
+.metamask-error {
+  min-height: 500px;
+}
+.winner {
+  margin-top: 30px;
+  height: 200px;
+}
+.notice {
+  background-color: #4e4469;
+  color: white;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px 16px;
+}

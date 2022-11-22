@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useEth from "../../contexts/EthContext/useEth";
-import Debug from "../Debug/Debug";
 import Voting from "../Voting/Voting";
 import VotingTallied from "../VotingTallied/VotingTallied";
 import NoticeNoArtifact from "./NoticeNoArtifact";
@@ -18,58 +17,28 @@ const Demo = () => {
   } = useEth();
 
   const [workflowStatus, setWorkflowStatus] = useState(0);
-  console.log({
-    "index:init:workflowStatus": workflowStatus,
-  });
+  // console.log({
+  //   "index:init:workflowStatus": workflowStatus,
+  // });
 
   useEffect(() => {
-    console.log({ "index:init:contract": contract });
+    // console.log({ "index:init:contract": contract });
     if (contract) {
       const initStatus = async () => {
-        console.log("initStatus");
         try {
           // get current status
           const currentStatus = await contract.methods.workflowStatus().call({
             from: accounts[0],
           });
-          console.log({ "index:init:currentStatus": parseInt(currentStatus) });
+          console.log({
+            "index:currentStatus": parseInt(currentStatus),
+          });
           setWorkflowStatus(parseInt(currentStatus));
         } catch (e) {
           alert(e.message);
         }
       };
       initStatus().catch(console.error);
-    }
-  }, [accounts, contract]);
-
-  useEffect(() => {
-    if (contract) {
-      const fetchEventStatus = async () => {
-        // fetch new status
-        const eventNewStatus = await contract.events
-          .WorkflowStatusChange({ fromBlock: "earliest" })
-          .on("data", (event) => {
-            console.debug({ event });
-            // let newStatusEvent = event.returnValues.newStatus;
-            console.log({
-              "index:newStatusEvent": event.returnValues.newStatus,
-              "index:newStatusEvent:parseInt": parseInt(
-                event.returnValues.newStatus
-              ),
-            });
-            // setWorkflowStatus(parseInt(newStatusEvent));
-            return parseInt(event.returnValues.newStatus);
-          });
-
-        console.log({
-          "index:newStatusEvent": eventNewStatus,
-          conditionNan: isNaN(eventNewStatus),
-        });
-        if (!isNaN(eventNewStatus)) {
-          setWorkflowStatus(parseInt(eventNewStatus));
-        }
-      };
-      fetchEventStatus().catch(console.error);
     }
   }, [accounts, contract]);
 
@@ -80,15 +49,19 @@ const Demo = () => {
           <Progress workflowStatus={workflowStatus} />
           <div className="row">
             <div className="col-md-2">
-              {isOwner ? <MenuStatus workflowStatus={workflowStatus} /> : null}
+              {isOwner ? (
+                <MenuStatus setWorkflowStatus={setWorkflowStatus} />
+              ) : null}
             </div>
             <div className="col-md-10">
-              {isOwner && workflowStatus === 0 ? <AddVoter /> : null}
+              {isOwner ? <AddVoter workflowStatus={workflowStatus} /> : null}
               {!isOwner ? (
                 <AddProposal workflowStatus={workflowStatus} />
               ) : null}
               {!isOwner ? <Voting workflowStatus={workflowStatus} /> : null}
-              {isOwner ? <VotingTallied /> : null}
+              {isOwner ? (
+                <VotingTallied workflowStatus={workflowStatus} />
+              ) : null}
               {!isOwner ? <Result workflowStatus={workflowStatus} /> : null}
             </div>
           </div>

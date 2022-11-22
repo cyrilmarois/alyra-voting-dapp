@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useEth } from "../../contexts/EthContext";
 import "./VotingTallied.css";
 
 const VotingTallied = ({ workflowStatus }) => {
-  console.log({ "VotingTallied:init:workflowStatus": workflowStatus });
+  // console.log({ "VotingTallied:init:workflowStatus": workflowStatus });
   const {
     state: { contract, accounts },
   } = useEth();
   const [error, setError] = useState("");
   const [hasError, setHasError] = useState(false);
-  const [winnerProposal, setWinnerProposal] = useState("TADAMMM !!!");
-  console.log({ "VotingTallied:init:winnerProposal": winnerProposal });
 
   const startTalliedHandler = async () => {
     try {
@@ -28,14 +26,16 @@ const VotingTallied = ({ workflowStatus }) => {
 
   const tallyVotes = (
     <>
-      <div id="votingTallied" className="row justify-content-center">
-        <h2 className="title">Pick the winner</h2>
-
+      <div
+        id="votingTallied"
+        className="row align-items-center justify-content-center"
+      >
         <div className="col-5">
-          <div className="row  justify-content-center">
+          <div className="row justify-content-center">
             <button type="btn btn-primary" onClick={startTalliedHandler}>
-              Let's go <span>&#128373;</span>
+              Pick the winner <span>&#128373;</span>
             </button>
+            <div className="error">{error}</div>
           </div>
         </div>
       </div>

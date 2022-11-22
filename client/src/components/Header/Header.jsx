@@ -3,7 +3,7 @@ import "./Header.css";
 
 const Header = () => {
   const {
-    state: { accounts, contract },
+    state: { accounts },
   } = useEth();
   const { state } = useEth();
   let loggedAccount = "CONNECT";
@@ -13,25 +13,13 @@ const Header = () => {
     loggedAccount = accounts[0].slice(0, 5) + "..." + accounts[0].slice(-4);
   }
 
-  const connectMetamaskHandler = () => {
-    //Will Start the metamask extension
-    console.log({ ethereum: window.ethereum });
-    window.ethereum.request({ method: "eth_requestAccounts" });
-  };
+  const connectMetamaskHandler = () => {};
 
   return (
     <div id="Header" className="row align-items-start">
-      <nav className="navbar navbar-expand-lg bg-light">
+      <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            <img
-              src="https://alyra.fr/wp-content/uploads/2019/06/logo-titre-alyra-bleu-transparent-64px_v3.png"
-              alt=""
-              width="30"
-              height="24"
-              className="d-inline-block align-text-top"
-            />
-          </a>
+          <a className="navbar-brand" href="#"></a>
           <div className="d-flex flex-row-reverse">
             <button
               className="block"
