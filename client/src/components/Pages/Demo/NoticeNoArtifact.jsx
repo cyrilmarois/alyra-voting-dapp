@@ -1,3 +1,5 @@
+import "./Index.css";
+
 function NoticeNoArtifact() {
   return (
     <div className="row align-items-center justify-content-center metamask-error">

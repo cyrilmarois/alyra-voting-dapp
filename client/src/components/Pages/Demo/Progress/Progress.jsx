@@ -1,7 +1,7 @@
 import "./Progress.css";
 
 const Progress = ({ workflowStatus }) => {
-  // console.log({ "Progress:init": workflowStatus });
+  console.log({ "Progress:init": workflowStatus });
 
   return (
     <div className="col-md-12 subHeader">
