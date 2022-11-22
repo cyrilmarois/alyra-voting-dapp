@@ -1,3 +1,15 @@
+# Release 0.2.0
+
+## Update :
+
+- Update organization structure
+- Add tally button trigger in menuStatus
+- Update readme
+
+## Fix
+
+- Fix menu
+
 # Release 0.1.0
 
 Create Dapp :
