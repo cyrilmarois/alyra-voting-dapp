@@ -3,7 +3,7 @@ import { useEth } from "../../contexts/EthContext";
 import VoterList from "../VoterList/VoterList";
 import "./AddVoter.css";
 
-const AddVoter = () => {
+const AddVoter = ({ workflowStatus }) => {
   const {
     state: { contract, accounts },
   } = useEth();
@@ -42,38 +42,42 @@ const AddVoter = () => {
     }
   };
 
-  return (
-    <div id="voter" className="row g-3 justify-content-center">
-      <h2 className="title">Add a voter</h2>
-      <div className="col-5">
-        <form
-          className="row justify-content-center g-3 needs-validation"
-          noValidate
-        >
-          <input
-            type="text"
-            className={`form-control ${hasError ? "error" : ""}`}
-            id="voterAddressInput"
-            value={voterAddressInput}
-            placeholder="0x..."
-            onChange={handleInputAddressChange}
-            required
-          />
-          <div className="error">{error}</div>
-          <button
-            type="button"
-            onClick={addVoterHandler}
-            className="btn btn-primary btn-lg"
+  const addVoter = (
+    <>
+      <div id="voter" className="row g-3 justify-content-center">
+        <h1 className="title">Add a voter</h1>
+        <div className="col-5">
+          <form
+            className="row justify-content-center g-3 needs-validation"
+            noValidate
           >
-            Add
-          </button>
-        </form>
+            <input
+              type="text"
+              className={`form-control ${hasError ? "error" : ""}`}
+              id="voterAddressInput"
+              value={voterAddressInput}
+              placeholder="0x..."
+              onChange={handleInputAddressChange}
+              required
+            />
+            <div className="error">{error}</div>
+            <button
+              type="button"
+              onClick={addVoterHandler}
+              className="btn btn-primary btn-lg"
+            >
+              Add
+            </button>
+          </form>
+        </div>
+        <div className="col-12">
+          <VoterList />
+        </div>
       </div>
-      <div className="col-12">
-        <VoterList />
-      </div>
-    </div>
+    </>
   );
+
+  return <>{workflowStatus === 0 ? addVoter : null}</>;
 };
 
 export default AddVoter;

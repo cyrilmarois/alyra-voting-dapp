@@ -2,11 +2,10 @@ import { useState } from "react";
 import { useEth } from "../../contexts/EthContext";
 import ProposalList from "../ProposalList/ProposalList";
 import "./AddProposal.css";
-import NoticeProposalEnd from "./NoticeProposalEnd";
 import NoticeProposalNotStarted from "./NoticeProposalNotStarted";
 
 const AddProposal = ({ workflowStatus }) => {
-  console.log({ addProposal: workflowStatus });
+  // console.log({ addProposal: workflowStatus });
   const {
     state: { contract, accounts },
   } = useEth();
@@ -44,8 +43,8 @@ const AddProposal = ({ workflowStatus }) => {
   const addProposal = (
     <>
       <div id="proposal" className="row g-3 justify-content-center">
-        <h2 className="title">Submit a proposal</h2>
-        <div className="col-5">
+        <h1 className="title">Submit a proposal</h1>
+        <div className="col-5 form">
           <form
             className="row justify-content-center g-3 needs-validation"
             noValidate
@@ -55,7 +54,7 @@ const AddProposal = ({ workflowStatus }) => {
               className={`form-control ${hasError ? "error" : ""}`}
               id="proposalInput"
               defaultValue={inputProposal}
-              placeholder="What do you want ?"
+              placeholder="What do you want.. ?"
               onChange={handleInputProposalChange}
               required
             />
@@ -82,7 +81,7 @@ const AddProposal = ({ workflowStatus }) => {
         <div className="col-md-12">
           <NoticeProposalNotStarted />
         </div>
-      ) : workflowStatus === 1 && workflowStatus < 3 ? (
+      ) : workflowStatus === 1 ? (
         addProposal
       ) : null}
     </>
