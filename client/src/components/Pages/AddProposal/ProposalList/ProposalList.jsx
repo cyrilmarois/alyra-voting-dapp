@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useEth } from "../../contexts/EthContext";
+import { useEth } from "../../../../contexts/EthContext";
 import "./ProposalList.css";
 
 const ProposalList = () => {

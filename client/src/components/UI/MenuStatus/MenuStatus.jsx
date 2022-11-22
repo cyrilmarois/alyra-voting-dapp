@@ -1,14 +1,14 @@
-import { useEffect } from "react";
 import { useState } from "react";
-import { useEth } from "../../contexts/EthContext";
+import { useEth } from "../../../contexts/EthContext";
 import "./MenuStatus.css";
 
 const MenuStatus = ({ setWorkflowStatus }) => {
   const {
     state: { contract, accounts },
   } = useEth();
+  const [currentStatus, setCurrentStatus] = useState(0);
 
-  const startAddVoter = async () => {
+  const startAddVoterHandler = async () => {
     try {
       await contract.methods.addVoter().call({
         from: accounts[0],
@@ -21,7 +21,7 @@ const MenuStatus = ({ setWorkflowStatus }) => {
     }
   };
 
-  const startProposalRegistering = async () => {
+  const startProposalRegisteringHandler = async () => {
     try {
       await contract.methods.startProposalsRegistering().call({
         from: accounts[0],
@@ -29,13 +29,13 @@ const MenuStatus = ({ setWorkflowStatus }) => {
       await contract.methods.startProposalsRegistering().send({
         from: accounts[0],
       });
-      currentStatus();
+      getCurrentStatus();
     } catch (e) {
       alert(e.message);
     }
   };
 
-  const endProposalRegistering = async () => {
+  const endProposalRegisteringHandler = async () => {
     try {
       await contract.methods.endProposalsRegistering().call({
         from: accounts[0],
@@ -43,13 +43,13 @@ const MenuStatus = ({ setWorkflowStatus }) => {
       await contract.methods.endProposalsRegistering().send({
         from: accounts[0],
       });
-      currentStatus();
+      getCurrentStatus();
     } catch (e) {
       alert(e.message);
     }
   };
 
-  const startVotingSession = async () => {
+  const startVotingSessionHandler = async () => {
     try {
       await contract.methods.startVotingSession().call({
         from: accounts[0],
@@ -57,13 +57,13 @@ const MenuStatus = ({ setWorkflowStatus }) => {
       await contract.methods.startVotingSession().send({
         from: accounts[0],
       });
-      currentStatus();
+      getCurrentStatus();
     } catch (e) {
       alert(e.message);
     }
   };
 
-  const endVotingSession = async () => {
+  const endVotingSessionHandler = async () => {
     try {
       await contract.methods.endVotingSession().call({
         from: accounts[0],
@@ -71,17 +71,32 @@ const MenuStatus = ({ setWorkflowStatus }) => {
       await contract.methods.endVotingSession().send({
         from: accounts[0],
       });
-      currentStatus();
+      getCurrentStatus();
     } catch (e) {
       alert(e.message);
     }
   };
 
-  const currentStatus = async () => {
-    const currentStatus = await contract.methods.workflowStatus().call({
+  const tallyVoteHandler = async () => {
+    try {
+      await contract.methods.tallyVotes().call({
+        from: accounts[0],
+      });
+      await contract.methods.tallyVotes().send({
+        from: accounts[0],
+      });
+      getCurrentStatus();
+    } catch (e) {
+      alert(e.message);
+    }
+  };
+
+  const getCurrentStatus = async () => {
+    const tmpCurrentStatus = await contract.methods.workflowStatus().call({
       from: accounts[0],
     });
-    setWorkflowStatus(parseInt(currentStatus));
+    setCurrentStatus(parseInt(tmpCurrentStatus));
+    setWorkflowStatus(parseInt(tmpCurrentStatus));
   };
 
   return (
@@ -91,8 +106,10 @@ const MenuStatus = ({ setWorkflowStatus }) => {
           <div className="row mb-3">
             <button
               type="button"
-              className="btn btn-primary position-relative"
-              onClick={startAddVoter}
+              className={`btn btn-primary position-success ${
+                currentStatus !== 5 ? "disabled" : ""
+              }`}
+              onClick={startAddVoterHandler}
             >
               Add voter
             </button>
@@ -100,8 +117,10 @@ const MenuStatus = ({ setWorkflowStatus }) => {
           <div className="row mb-3">
             <button
               type="button"
-              className="btn btn-success position-relative"
-              onClick={startProposalRegistering}
+              className={`btn btn-success position-success ${
+                currentStatus !== 0 ? "disabled" : ""
+              }`}
+              onClick={startProposalRegisteringHandler}
             >
               Start proposals registering
             </button>
@@ -109,8 +128,10 @@ const MenuStatus = ({ setWorkflowStatus }) => {
           <div className="row mb-3">
             <button
               type="button"
-              className="btn btn-info position-relative"
-              onClick={endProposalRegistering}
+              className={`btn btn-info position-success ${
+                currentStatus - 1 !== 0 ? "disabled" : ""
+              }`}
+              onClick={endProposalRegisteringHandler}
             >
               End proposals registering
             </button>
@@ -118,8 +139,10 @@ const MenuStatus = ({ setWorkflowStatus }) => {
           <div className="row mb-3">
             <button
               type="button"
-              className="btn btn-warning position-relative"
-              onClick={startVotingSession}
+              className={`btn btn-warning position-success ${
+                currentStatus - 1 !== 1 ? "disabled" : ""
+              }`}
+              onClick={startVotingSessionHandler}
             >
               Start voting
             </button>
@@ -127,10 +150,23 @@ const MenuStatus = ({ setWorkflowStatus }) => {
           <div className="row mb-3">
             <button
               type="button"
-              className="btn btn-danger position-relative"
-              onClick={endVotingSession}
+              className={`btn btn-danger position-success ${
+                currentStatus - 1 !== 2 ? "disabled" : ""
+              }`}
+              onClick={endVotingSessionHandler}
             >
               End voting
+            </button>
+          </div>
+          <div className="row mb-3">
+            <button
+              type="button"
+              className={`btn btn-primary position-success ${
+                currentStatus - 1 !== 3 ? "disabled" : ""
+              }`}
+              onClick={tallyVoteHandler}
+            >
+              Tally Votes
             </button>
           </div>
         </div>

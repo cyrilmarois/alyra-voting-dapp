@@ -1,4 +1,4 @@
-import { useEth } from "../../contexts/EthContext";
+import { useEth } from "../../../contexts/EthContext";
 import "./Header.css";
 
 const Header = () => {

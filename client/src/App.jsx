@@ -1,6 +1,6 @@
 import { EthProvider } from "./contexts/EthContext";
-import Header from "./components/Header/Header.jsx";
-import Demo from "./components/Demo";
+import Header from "./components/UI/Header/Header.jsx";
+import Demo from "./components/Pages/Demo";
 import "./App.css";
 
 function App() {
