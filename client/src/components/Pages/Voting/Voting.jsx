@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useEth } from "../../contexts/EthContext";
+import { useEth } from "../../../contexts/EthContext";
 import NoticeVotingNotStarted from "./NoticeVotingNotStarted";
 import "./Voting.css";
 
@@ -146,7 +146,9 @@ const Voting = ({ workflowStatus }) => {
         </div>
       ) : workflowStatus === 3 ? (
         voting
-      ) : null}
+      ) : (
+        ""
+      )}
     </>
   );
 };

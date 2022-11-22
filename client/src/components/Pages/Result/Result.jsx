@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useEth } from "../../contexts/EthContext";
+import { useEth } from "../../../contexts/EthContext";
 import NoticeResultNotAvailable from "./NoticeResultNotAvailable";
 import "./Result.css";
 
@@ -82,10 +82,10 @@ const Result = ({ workflowStatus }) => {
     <>
       <div id="Result" className="row g-3 justify-content-center">
         <div className="col-12">
-          <h1 className="title">The winner proposal</h1>
+          <h1 className="title">We have a winner</h1>
           <div className="row winner justify-content-center">
             <div className="winning col-12 justify-content-center">
-              <div className="winning col-12 justify-content-center">
+              <div className="notice col-12 justify-content-center">
                 We thank you for your participation
               </div>
               <span>&#128640;</span>

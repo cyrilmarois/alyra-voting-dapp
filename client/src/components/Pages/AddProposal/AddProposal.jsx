@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useEth } from "../../contexts/EthContext";
-import ProposalList from "../ProposalList/ProposalList";
-import "./AddProposal.css";
+import { useEth } from "../../../contexts/EthContext";
+import ProposalList from "./ProposalList/ProposalList";
 import NoticeProposalNotStarted from "./NoticeProposalNotStarted";
+import "./AddProposal.css";
 
 const AddProposal = ({ workflowStatus }) => {
   // console.log({ addProposal: workflowStatus });

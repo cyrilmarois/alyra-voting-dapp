@@ -1,0 +1,17 @@
+#proposal {
+  height: 300px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+.error {
+  color: red;
+  font-size: 12px;
+}
+input.error {
+  border: 1px solid red;
+}
+.form {
+  height: 150px;
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useEth } from "../../contexts/EthContext";
-import VoterList from "../VoterList/VoterList";
+import { useEth } from "../../../contexts/EthContext";
+import VoterList from "./VoterList/VoterList";
 import "./AddVoter.css";
 
 const AddVoter = ({ workflowStatus }) => {

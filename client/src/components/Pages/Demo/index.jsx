@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import useEth from "../../contexts/EthContext/useEth";
+import { useEth } from "../../../contexts/EthContext";
 import Voting from "../Voting/Voting";
-import VotingTallied from "../VotingTallied/VotingTallied";
+import TallyVotes from "../TallyVotes/TallyVotes";
 import NoticeNoArtifact from "./NoticeNoArtifact";
 import NoticeWrongNetwork from "./NoticeWrongNetwork";
 import Progress from "./Progress/Progress";
-import MenuStatus from "../MenuStatus/MenuStatus";
+import MenuStatus from "../../UI/MenuStatus/MenuStatus";
 import Result from "../Result/Result";
 import AddVoter from "../AddVoter/AddVoter";
 import AddProposal from "../AddProposal/AddProposal";
@@ -59,9 +59,7 @@ const Demo = () => {
                 <AddProposal workflowStatus={workflowStatus} />
               ) : null}
               {!isOwner ? <Voting workflowStatus={workflowStatus} /> : null}
-              {isOwner ? (
-                <VotingTallied workflowStatus={workflowStatus} />
-              ) : null}
+              {isOwner ? <TallyVotes workflowStatus={workflowStatus} /> : null}
               {!isOwner ? <Result workflowStatus={workflowStatus} /> : null}
             </div>
           </div>
