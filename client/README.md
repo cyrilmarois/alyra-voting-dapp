@@ -1,15 +1,37 @@
-# React client
+# Welcome in alpha version of the voting Dapp
 
-This project is bootstraped with [Create React App](https://create-react-app.dev). It is unopinionated with only `web3.js` as an added dependency, so nothing stands in your way.
+You can check the video content on how it works [`here`](https://www.loom.com/share/db7cd09889bb43fca1d640257b492c72)
 
-## Getting started
+Check the demo [`here`](https://alyra-voting-dapp-akt4.vercel.app/)
 
-Run `npm start` to start the dev server.
+You can check the `smart contract` at this [`address`](https://goerli.etherscan.io/address/0x9f6a50DE3ee8DFBcF19c16f75beA133F886E91Ec) . It has been deployed on `Goerli` test network.
 
-See all [available scripts](https://create-react-app.dev/docs/available-scripts).
+The solidity compiler version is `0.8.17`
 
-## Note on `react-scripts` version
+---
 
-The installed version of `react-scripts` is 4.x instead of the latest 5.x, which uses Webpack 5. This is because Webpack 5 no longer auto-polyfills Node.js core modules, which `web3.js` depends on.
+## Play with it on your local machine
 
-If you don't want to use `react-scripts` at 4.x, alternative solutions include [`eject`](https://create-react-app.dev/docs/available-scripts/#npm-run-eject) and [`react-app-rewired`](https://github.com/timarney/react-app-rewired) (See [instruction](https://github.com/ChainSafe/web3.js#web3-and-create-react-app)).
+### Requirements
+
+- Ganache
+- Metamask
+- NodeJs
+
+Please read the documentation on how to install `Ganache`, once it's installed and running on your local machine
+
+```
+$ > cd truffle
+$ > npm install
+$ > truffle migrate --reset --network development
+```
+
+Then, on the the client side
+
+```
+$ > cd client
+$ > npm install
+$ > npm run start
+```
+
+It should runs the dapp on your 3000 local port [`http://localhost:3000/`](http://localhost:3000/)
